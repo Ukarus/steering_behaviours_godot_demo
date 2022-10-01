@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Vehicle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/TargetBody.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.5, 32 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Vehicle" parent="." instance=ExtResource( 1 )]
+position = Vector2( 33, 45 )
+m_dMass = 0.8
+m_dMaxSpeed = 100.0
+m_dMaxForce = 10.0
+m_dMaxTurnRate = 5.0
+target_path = NodePath("../TargetBody")
+
+[node name="TargetBody" type="KinematicBody2D" parent="."]
+position = Vector2( 494, 299 )
+script = ExtResource( 3 )
+
+[node name="Target" type="Sprite" parent="TargetBody"]
+modulate = Color( 0.917647, 0.235294, 0.235294, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetBody"]
+position = Vector2( 0.5, -1 )
+shape = SubResource( 1 )

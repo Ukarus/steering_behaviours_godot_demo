@@ -1,0 +1,41 @@
+[gd_scene format=2]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="CompanionContainer" type="HSplitContainer" parent="."]
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 191.0
+margin_bottom = 18.0
+
+[node name="Label" type="Label" parent="CompanionContainer"]
+margin_top = 1.0
+margin_right = 72.0
+margin_bottom = 15.0
+text = "Companion"
+
+[node name="ProgressBar" type="ProgressBar" parent="CompanionContainer"]
+margin_left = 84.0
+margin_right = 190.0
+margin_bottom = 14.0
+max_value = 5.0
+value = 5.0
+
+[node name="PlayerContainer" type="HSplitContainer" parent="."]
+margin_left = 4.0
+margin_top = 23.0
+margin_right = 194.0
+margin_bottom = 39.0
+
+[node name="Label" type="Label" parent="PlayerContainer"]
+margin_top = 1.0
+margin_right = 39.0
+margin_bottom = 15.0
+text = "Player"
+
+[node name="ProgressBar" type="ProgressBar" parent="PlayerContainer"]
+margin_left = 51.0
+margin_right = 190.0
+margin_bottom = 14.0
+max_value = 5.0
+value = 5.0
