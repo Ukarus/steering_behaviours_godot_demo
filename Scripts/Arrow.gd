@@ -1,8 +1,8 @@
 extends Area2D
 
-export (float) var speed = 20
+export (float) var speed = 20.0
 export (Vector2) var target_pos
-export (float) var time_to_live = 5
+export (float) var time_to_live = 4.0
 export (int) var dmg = 1
 var direction: Vector2
 var velocity = Vector2()

@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export (NodePath) var player_path
 export (float) var follow_speed = 2.0
-export (float) var max_speed = 10
+export (float) var max_speed = 10.0
 export (float) var mass = 1.0
 export (int) var max_hp = 5
 export (PackedScene) var arrows
@@ -13,13 +13,20 @@ enum States {FOLLOW, ATTACK, WAIT, ATTACK_DELAY}
 var _state : int = States.FOLLOW
 var velocity = Vector2()
 var decceleration_tweaker = 0.3
-var should_wait = false
 var current_hp
 # this will act as a stack
 var targets = []
+var direction = "right"
+const DISTANCE_THRESHOLD = 10.0
+
 onready var player = get_node(player_path)
 onready var timer = $Timer
 onready var attack_timer = $AttackTimer
+onready var animated_sprite = $AnimatedSprite
+onready var animation_player = $AnimationPlayer
+onready var attack_radius = $AttackRadius
+onready var left_arrow_pos = $LeftArrowPos
+onready var right_arrow_pos = $RightArrowPos
 
 signal update_current_hp
 
@@ -34,7 +41,7 @@ func _ready():
 func move_with_interpolation(delta):
 	position = position.linear_interpolate(player.global_position, delta * follow_speed)
 
-func seek(target_position: Vector2):
+func seek(target_position: Vector2) -> Vector2:
 	var desired_velocity = (target_position - position).normalized() * max_speed
 	return desired_velocity - velocity
 
@@ -53,28 +60,44 @@ func arrive(target_position: Vector2, decceleration: int):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if _state == States.FOLLOW:
+		animation_player.play("run")
 		var steering_force = arrive(player.global_position, decceleration.fast)
 		var acceleration = steering_force / mass
 		velocity += acceleration * delta
 		velocity.x = min(velocity.x, max_speed)
 		velocity.y = min(velocity.y, max_speed)
-		move_and_slide(velocity)
+		if velocity.x > 0:
+			direction = "left"
+		elif velocity.x < 0:
+			direction = "right"
+		velocity = move_and_slide(velocity)
 	elif _state == States.ATTACK:
+		animation_player.play("attack_bow")
 		# Replace this logic for group nodes
 		var enemies = get_tree().get_nodes_in_group("enemies")
 		if enemies.size() < 1:
 			_state = States.FOLLOW
 			return
+		# choose target randomly
+		# or choose it closest to companion
 		var current_target = enemies[0]
 		var a = arrows.instance()
-#		var dot_product = current_target.position.dot(position)
-#		a.look_at(current_target.position)
+		add_child(a)
+		if current_target.position.x < position.x:
+			a.position = left_arrow_pos.position
+		else:
+			a.position = right_arrow_pos.position
 		# Predict the target future movement
 		a.target_pos = current_target.position
-		add_child(a)
+		a.look_at(current_target.position)
 		_state = States.ATTACK_DELAY
 	elif _state == States.ATTACK_DELAY:
+		if !animation_player.is_playing():
+			animation_player.play("idle")
 		attack_timer.start()
+	elif _state == States.WAIT:
+		animation_player.play("idle")
+	animated_sprite.flip_h = direction == "left"
 		
 
 func take_damage(dmg: int):
