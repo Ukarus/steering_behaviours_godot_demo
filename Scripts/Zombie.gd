@@ -38,18 +38,6 @@ func _process(delta):
 		velocity = move_and_slide(velocity)
 		_animated_sprite.flip_h = velocity.x < 0
 		scale.x = -1 if velocity.x < 0 else 1
-			
-		
-# 		var steering_force = sb_node.seek(current_target.position)
-# 		var acceleration = steering_force / moving_entity.m_dMass
-# 		moving_entity.m_vVelocity += acceleration * delta
-# 		moving_entity.m_vVelocity.x = min(moving_entity.m_vVelocity.x, moving_entity.m_dMaxSpeed)
-# 		moving_entity.m_vVelocity.y = min(moving_entity.m_vVelocity.y, moving_entity.m_dMaxSpeed)
-# #		move_and_slide(moving_entity.m_vVelocity)
-# 		position.x += moving_entity.m_vVelocity.x * delta
-# 		position.y += moving_entity.m_vVelocity.y * delta
-# 		# Update the local position of the enemy so the steering behaviour can calculate the steering force more precisely
-# 		moving_entity.m_vPosition = position
 	elif _state == States.ATTACK:
 		_animation_player.play("attack")
 	elif _state == States.DIE:
@@ -66,10 +54,10 @@ func damage(damage_done):
 		_state = States.DIE
 		
 func _on_AttackRange_body_entered(_body):
-	pass
-#	_state = States.ATTACK
+	_state = States.ATTACK
 
 func _on_HurtBox_body_entered(body):
+#	body.take_damage(attack_damage)
 	if _state == States.ATTACK:
 		body.take_damage(attack_damage)
 

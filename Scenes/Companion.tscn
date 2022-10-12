@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Scripts/Companion.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Arrow.tscn" type="PackedScene" id=3]
@@ -436,6 +436,9 @@ tracks/2/keys = {
 "values": [ Vector2( 2, -17 ), Vector2( 2, -17 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=89]
+radius = 28.6924
+
 [node name="Companion" type="KinematicBody2D"]
 scale = Vector2( 0.99103, 1 )
 collision_layer = 4
@@ -451,13 +454,12 @@ shape = SubResource( 1 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.25
 
-[node name="AttackRadius" type="Area2D" parent="."]
-visible = false
+[node name="BowAttackRadius" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 8
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRadius"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BowAttackRadius"]
 position = Vector2( 0, 1 )
 shape = SubResource( 2 )
 __meta__ = {
@@ -468,7 +470,7 @@ __meta__ = {
 wait_time = 0.2
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 2, -17 )
+position = Vector2( 3.02715, -6 )
 frames = SubResource( 15 )
 animation = "idle"
 
@@ -484,6 +486,11 @@ position = Vector2( 19.172, 0 )
 [node name="LeftArrowPos" type="Position2D" parent="."]
 position = Vector2( -20.181, 0 )
 
+[node name="MeleeAttackRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttackRadius"]
+shape = SubResource( 89 )
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="body_entered" from="AttackRadius" to="." method="_on_AttackRadius_body_entered"]
+[connection signal="body_entered" from="BowAttackRadius" to="." method="_on_AttackRadius_body_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

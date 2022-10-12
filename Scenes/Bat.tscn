@@ -354,6 +354,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("HurtBox:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.45 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 18, 0 ), Vector2( 18, 0 ) ]
+}
 
 [sub_resource type="Animation" id=38]
 resource_name = "death"
@@ -497,19 +509,46 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false, false ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("HurtBox:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.35 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 20, 4 ), Vector2( 20, 4 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("HurtBox/HurtBoxShape:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.35 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
 
 [sub_resource type="CapsuleShape2D" id=32]
 radius = 11.9305
 height = 24.1254
 
-[sub_resource type="RectangleShape2D" id=39]
-extents = Vector2( 7.00001, 6.99999 )
+[sub_resource type="CapsuleShape2D" id=39]
+radius = 15.0454
+height = 1.99984
 
 [node name="Bat" type="KinematicBody2D" groups=["enemies"]]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource( 2 )
 max_hp = 1
+attack_damage = 2
+max_speed = 125.0
 mass = 0.2
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
@@ -541,11 +580,13 @@ disabled = true
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2( 19, 0 )
+rotation = -3.13737
 collision_layer = 8
 collision_mask = 6
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 22, 3 )
+rotation = 1.57113
 shape = SubResource( 39 )
 disabled = true
 __meta__ = {

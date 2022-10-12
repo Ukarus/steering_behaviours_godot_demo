@@ -23,8 +23,8 @@ func _on_Timer_timeout():
 		timer.stop()
 	# Instance the bat enemy
 	var enemy = enemy_scene.instance()
-#	var rand_target = player if (randi() % 100 > 50) else companion
-	enemy.set_current_target(player)
+	var rand_target = player if (randi() % 100 > 50) else companion
+	enemy.set_current_target(rand_target)
 	
 	enemy_spawn_location.offset = randi()
 

@@ -4,7 +4,7 @@ export (NodePath) var player_path
 export (float) var follow_speed = 2.0
 export (float) var max_speed = 10.0
 export (float) var mass = 1.0
-export (int) var max_hp = 5
+export (int) var max_hp = 100
 export (PackedScene) var arrows
 enum decceleration {slow = 3, normal = 2, fast = 1}
 # An enum allows us to keep track of valid states.
@@ -24,9 +24,10 @@ onready var timer = $Timer
 onready var attack_timer = $AttackTimer
 onready var animated_sprite = $AnimatedSprite
 onready var animation_player = $AnimationPlayer
-onready var attack_radius = $AttackRadius
+onready var attack_radius = $BowAttackRadius
 onready var left_arrow_pos = $LeftArrowPos
 onready var right_arrow_pos = $RightArrowPos
+onready var melee_attack_radius = $MeleeAttackRadius
 
 signal update_current_hp
 
