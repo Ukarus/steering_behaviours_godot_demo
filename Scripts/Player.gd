@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+const ATTACK_DAMAGE = 1
 export (int) var speed = 200
 export (int) var max_hp = 5
 var velocity = Vector2()
@@ -76,7 +77,7 @@ func _on_CompanionRange_body_shape_exited(_body_rid, _body, _body_shape_index, _
 
 func _on_AttackRange_body_entered(body):
 	if body.is_in_group("enemies"):
-		body.damage(1)
+		body.damage(ATTACK_DAMAGE)
 
 func take_damage(dmg: int):
 	current_hp -= dmg

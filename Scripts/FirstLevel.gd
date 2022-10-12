@@ -21,7 +21,6 @@ func update_player_hud(new_hp):
 func show_defeat_menu():
 	hud.show_restart()
 
-
 func _on_VictoryZone_body_entered(_body):
 	hud.visible = false
 	get_tree().paused = true

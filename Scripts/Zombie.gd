@@ -1,8 +1,9 @@
 extends KinematicBody2D
 
 export (int) var max_hp
-export (int) var dmg = 1
+export (int) var attack_damage = 1
 export (float) var max_speed = 100.0
+export (float) var mass = 0.5
 var current_target
 var steering_behaviours = load("res://Scripts/SteeringBehaviours.gd")
 var class_moving_entity = load("res://Scripts/MovingEntity.gd")
@@ -23,19 +24,14 @@ var velocity = Vector2()
 func seek(target_position: Vector2):
 	var desired_velocity = (target_position - global_position).normalized() * max_speed
 	return desired_velocity - velocity
-
-func _ready():
-	moving_entity.m_vPosition = position
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if _state == States.FLIGHT:
 		_animation_player.play("flight")
-		# Function to look at the current target
-		# Right now if the target comes from left it's making the sprite upside down
-		# look_at(current_target.position)
 		var steering_force = seek(current_target.global_position)
-		var acceleration = steering_force / 0.8
+		var acceleration = steering_force / mass
 		velocity += acceleration * delta
 		velocity.x = min(velocity.x, max_speed)
 		velocity.y = min(velocity.y, max_speed)
@@ -70,11 +66,12 @@ func damage(damage_done):
 		_state = States.DIE
 		
 func _on_AttackRange_body_entered(_body):
-	_state = States.ATTACK
+	pass
+#	_state = States.ATTACK
 
 func _on_HurtBox_body_entered(body):
 	if _state == States.ATTACK:
-		body.take_damage(dmg)
+		body.take_damage(attack_damage)
 
 func _on_AttackRange_body_exited(_body):
 	_state = States.FLIGHT
