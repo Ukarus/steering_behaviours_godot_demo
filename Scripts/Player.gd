@@ -76,7 +76,7 @@ func _on_CompanionRange_body_shape_exited(_body_rid, _body, _body_shape_index, _
 	emit_signal("make_companion_follow")
 
 func _on_AttackRange_body_entered(body):
-	if body.is_in_group("enemies"):
+	if body.is_in_group("enemies") and body.has_method("damage"):
 		body.damage(ATTACK_DAMAGE)
 
 func take_damage(dmg: int):
