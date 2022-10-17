@@ -28,6 +28,7 @@ onready var right_arrow_pos = $RightArrowPos
 onready var melee_attack_radius = $MeleeAttackRadius
 
 signal update_current_hp
+signal companion_died
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -96,16 +97,9 @@ func _process(delta):
 		animation_player.play("melee_attack")
 		_state = States.ATTACK_DELAY
 	elif _state == States.ATTACK_DELAY:
-#		if !animation_player.is_playing():
-#			animation_player.play("idle")
 		attack_timer.start()
 		_state = States.IDLE
-	elif _state == States.IDLE:
-#		if animation_player.current_animation == "run":
-#			animation_player.play("idle")
-#		if global_position.distance_to(player.global_position) > 80:
-#			_state = States.FOLLOW
-		
+	elif _state == States.IDLE:		
 		if !animation_player.is_playing() or animation_player.current_animation == "run":
 			animation_player.play("idle")
 #	flip_sprite()
@@ -113,6 +107,8 @@ func _process(delta):
 
 func take_damage(dmg: int):
 	current_hp -= dmg
+	if current_hp <= 0:
+		emit_signal("companion_died")
 	emit_signal("update_current_hp", current_hp)
 
 func get_velocity():

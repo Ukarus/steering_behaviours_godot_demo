@@ -12,6 +12,8 @@ onready var path2d = $EnemyPath
 onready var enemy_spawn_location = $EnemyPath/EnemySpawnLocation
 var enemies_spawned = 0
 
+signal enemy_spawn_timer_stopped
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
@@ -20,7 +22,9 @@ func _ready():
 func _on_Timer_timeout():
 	# if we reached the limit of enemies to spawn 
 	if enemies_spawned >= enemies_to_spawn:
+		# -24,-1
 		timer.stop()
+		emit_signal("enemy_spawn_timer_stopped")
 	# Instance the bat enemy
 	var enemy = enemy_scene.instance()
 	var rand_target = player if (randi() % 100 > 50) else companion
