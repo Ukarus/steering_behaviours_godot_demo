@@ -1,6 +1,7 @@
 extends Node2D
 
 export (PackedScene) var victory_scene
+export (PackedScene) var restart_scene
 onready var player = $Player
 onready var companion = $Companion
 onready var hud = $HUD
@@ -35,7 +36,8 @@ func update_player_hud(new_hp):
 	player_bar.value = new_hp
 	
 func show_defeat_menu():
-	hud.show_restart()
+	get_tree().change_scene_to(restart_scene)
+#	hud.show_restart()
 
 func _on_VictoryZone_body_entered(_body):
 	hud.visible = false

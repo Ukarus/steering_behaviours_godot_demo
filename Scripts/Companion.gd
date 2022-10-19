@@ -5,6 +5,7 @@ export (float) var max_speed = 10.0
 export (float) var mass = 1.0
 export (float) var bow_attack_distance = 100.0
 export (float) var melee_attack_distance = 50.0
+export (float) var melee_attack_damage = 2.0
 export (int) var max_hp = 100
 export (NodePath) var player_path
 export (PackedScene) var arrows
@@ -140,4 +141,4 @@ func _on_AttackTimer_timeout():
 
 func _on_MeleeAttackRadius_body_entered(body):
 	if body.is_in_group("enemies"):
-		body.damage(1)
+		body.damage(melee_attack_damage)

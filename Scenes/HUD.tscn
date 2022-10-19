@@ -1,12 +1,7 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
-
-[sub_resource type="Theme" id=1]
+[gd_scene format=2]
 
 [node name="HUD" type="CanvasLayer"]
 pause_mode = 2
-script = ExtResource( 1 )
 
 [node name="CompanionContainer" type="HSplitContainer" parent="."]
 margin_left = 1.0
@@ -45,27 +40,3 @@ margin_right = 190.0
 margin_bottom = 14.0
 max_value = 5.0
 value = 5.0
-
-[node name="RestartContainer" type="VBoxContainer" parent="."]
-margin_left = 377.0
-margin_top = 148.0
-margin_right = 697.0
-margin_bottom = 285.0
-
-[node name="Label" type="Label" parent="RestartContainer"]
-margin_right = 320.0
-margin_bottom = 14.0
-theme = SubResource( 1 )
-text = "You died"
-align = 1
-valign = 1
-uppercase = true
-
-[node name="Label2" type="Label" parent="RestartContainer"]
-margin_top = 18.0
-margin_right = 320.0
-margin_bottom = 32.0
-theme = SubResource( 1 )
-text = "Press enter to restart"
-align = 1
-valign = 1

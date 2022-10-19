@@ -10,7 +10,7 @@ signal make_companion_follow
 signal update_player_hud
 signal player_died
 
-enum States {ATTACK, RUN, IDLE}
+enum States {ATTACK, RUN, IDLE, DIE, ROLL}
 # With a variable that keeps track of the current state, we don't need to add more booleans.
 var _state : int = States.IDLE
 onready var current_hp = max_hp
@@ -41,6 +41,9 @@ func _process(_delta):
 	get_input()
 	match _state:
 		States.IDLE:
+			animation_player.play("idle")
+			if Input.is_action_just_pressed("roll"):
+				_state = States.ROLL
 			if Input.is_action_just_pressed("attack_light"):
 				_state = States.ATTACK
 				animation_player.play("attack1")
@@ -52,15 +55,25 @@ func _process(_delta):
 			# if any of the input movement buttons is pressed
 			if !animation_player.is_playing():
 				_state = States.IDLE
-				animation_player.play("idle")
 		States.RUN:
+			if Input.is_action_just_pressed("roll"):
+				_state = States.ROLL
 			if Input.is_action_just_pressed("attack_light"):
 				_state = States.ATTACK
 				animation_player.play("attack1")
 			if velocity.x == 0 && velocity.y == 0:
 				_state = States.IDLE
-				animation_player.play("idle")
 			# if i want to keep moving when attacking just put this line outside of the match block
+			velocity = move_and_slide(velocity)
+		States.DIE:
+			if animation_player.current_animation != "die":
+				animation_player.play("die")
+		States.ROLL:
+			if Input.is_action_just_pressed("attack_light"):
+				_state = States.ATTACK
+				animation_player.play("attack1")
+			if animation_player.current_animation != "roll":
+				animation_player.play("roll")
 			velocity = move_and_slide(velocity)
 
 func get_velocity():
@@ -68,6 +81,9 @@ func get_velocity():
 	
 func get_speed():
 	return speed
+	
+func go_to_idle():
+	_state = States.IDLE
 	
 func _on_CompanionRange_body_shape_entered(_body_rid, _body, _body_shape_index, _local_shape_index):
 	emit_signal("make_companion_wait")
@@ -80,7 +96,8 @@ func _on_AttackRange_body_entered(body):
 		body.damage(ATTACK_DAMAGE)
 
 func take_damage(dmg: int):
-	current_hp -= dmg
-	if current_hp <= 0:
-		emit_signal("player_died")
+	if _state != States.ROLL:
+		current_hp -= dmg
+	if current_hp <= 0 and _state != States.DIE:
+		_state = States.DIE
 	emit_signal("update_player_hud", current_hp)
