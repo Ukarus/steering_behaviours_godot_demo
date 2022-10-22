@@ -101,3 +101,7 @@ func take_damage(dmg: int):
 	if current_hp <= 0 and _state != States.DIE:
 		_state = States.DIE
 	emit_signal("update_player_hud", current_hp)
+
+func take_hp_potion(points):
+	current_hp += points
+	emit_signal("update_player_hud", current_hp)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Fonts/GravediggerPersonalUse-K7ayW.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/RestartScene.gd" type="Script" id=2]
+[ext_resource path="res://UITheme.tres" type="Theme" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 1 )
@@ -10,13 +11,6 @@ font_data = ExtResource( 1 )
 default_font = SubResource( 2 )
 
 [sub_resource type="Theme" id=7]
-
-[sub_resource type="DynamicFont" id=5]
-size = 64
-font_data = ExtResource( 1 )
-
-[sub_resource type="Theme" id=8]
-default_font = SubResource( 5 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 32
@@ -50,7 +44,7 @@ alignment = 1
 margin_top = 94.0
 margin_right = 1024.0
 margin_bottom = 149.0
-theme = SubResource( 8 )
+theme = ExtResource( 3 )
 custom_colors/font_color = Color( 0.85098, 0.117647, 0.117647, 1 )
 text = "You died"
 align = 1
@@ -61,7 +55,7 @@ uppercase = true
 margin_top = 153.0
 margin_right = 1024.0
 margin_bottom = 181.0
-theme = SubResource( 8 )
+theme = ExtResource( 3 )
 custom_colors/font_color = Color( 0.929412, 0.105882, 0.105882, 1 )
 custom_fonts/font = SubResource( 9 )
 text = "Press enter to restart"

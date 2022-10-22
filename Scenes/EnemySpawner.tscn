@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/HealthPotion.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/EnemySpawner.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Bat.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 177.394, 110, 0, 0, 0, 0, 175.748, -35, 0, 0, 0, 0, 172.731, -177, 0, 0, 0, 0, 135.563, -187, 0, 0, 0, 0, 134.192, -9.99997, 0, 0, 0, 0, 134.466, 128, 0, 0, 0, 0, 159.29, 113, 0, 0, 0, 0, 177.257, 110, 0, 0, 0, 0, 177.394, 110 )
+}
+
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 51, 171.5 )
+
+[node name="EnemySpawner" type="Node2D"]
+position = Vector2( 580, 44 )
+script = ExtResource( 2 )
+enemy_scene = ExtResource( 3 )
+reward = ExtResource( 1 )
+player_path = NodePath("../Player")
+companion_path = NodePath("../Companion")
+enemies_to_spawn = 5
+zone_to_open = 1
+
+[node name="EnemyPath" type="Path2D" parent="."]
+position = Vector2( -1132.43, -3.05176e-05 )
+scale = Vector2( 7.29128, 1 )
+curve = SubResource( 1 )
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
+position = Vector2( 177.394, 110 )
+rotation = -1.58214
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="AttackPlayersArea" type="Area2D" parent="."]
+position = Vector2( -170, -29 )
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPlayersArea"]
+shape = SubResource( 28 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="AttackPlayersArea" to="." method="_on_AttackPlayersArea_body_entered"]

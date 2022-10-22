@@ -133,6 +133,10 @@ func _on_AttackRadius_body_entered(body):
 	if _state != States.ATTACK_DELAY and _state != States.ATTACK:
 		_state = States.ATTACK
 
+func take_hp_potion(points):
+	current_hp += points
+	emit_signal("update_current_hp", current_hp)
+	
 
 func _on_AttackTimer_timeout():
 	_state = are_enemies_in_attack_range()

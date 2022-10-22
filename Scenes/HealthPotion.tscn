@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Graphics/flasks/flasks_1_1.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/HealthPotion.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.52268
+
+[node name="HealthPotion" type="Area2D"]
+scale = Vector2( 2, 2 )
+collision_layer = 0
+collision_mask = 6
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_HealthPotion_body_entered"]
