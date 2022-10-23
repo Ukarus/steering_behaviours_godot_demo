@@ -36,7 +36,6 @@ func damage(dmg_taken):
 	if current_hp < 1:
 		queue_free()
 
-
 func _on_AttackRange_body_entered(_body):
 	_state = States.ATTACK
 

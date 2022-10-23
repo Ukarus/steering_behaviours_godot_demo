@@ -48,7 +48,6 @@ func _on_Timer_timeout():
 	
 	add_child(enemy)
 	enemies_spawned += 1
-	print(enemies_spawned)
 	
 func _on_AttackPlayersArea_body_entered(_body):
 	if !has_spawn_been_triggered:

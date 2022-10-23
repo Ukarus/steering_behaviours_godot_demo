@@ -1,0 +1,3 @@
+# Unnamed Game Title
+
+This is kind of a concept game which uses steering behaviours in Godot to get from point A to B by having a companion that follows you. The steering behaviours used are based on the excellent book [Programming Game Ai by Example](https://www.amazon.com/Programming-Example-Wordware-Developers-Library/dp/1556220782) and the [Intro to Steering Behaviours in Godot by Gdquest](https://www.youtube.com/watch?v=UWlErVIJIw0&list=PLhqJJNjsQ7KEeKKQCcyWnORf4g4l_niTM&index=27&t=993s)
