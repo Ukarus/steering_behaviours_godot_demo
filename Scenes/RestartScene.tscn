@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Fonts/GravediggerPersonalUse-K7ayW.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/RestartScene.gd" type="Script" id=2]
@@ -11,6 +11,10 @@ font_data = ExtResource( 1 )
 default_font = SubResource( 2 )
 
 [sub_resource type="Theme" id=7]
+
+[sub_resource type="DynamicFont" id=10]
+size = 64
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 32
@@ -25,7 +29,7 @@ script = ExtResource( 2 )
 margin_left = -5.0
 margin_top = 3.0
 margin_right = 1024.0
-margin_bottom = 597.0
+margin_bottom = 721.0
 theme = SubResource( 6 )
 
 [node name="RestartContainer" type="VBoxContainer" parent="PanelRestart"]
@@ -46,6 +50,7 @@ margin_right = 1024.0
 margin_bottom = 149.0
 theme = ExtResource( 3 )
 custom_colors/font_color = Color( 0.85098, 0.117647, 0.117647, 1 )
+custom_fonts/font = SubResource( 10 )
 text = "You died"
 align = 1
 valign = 1

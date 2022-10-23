@@ -796,10 +796,12 @@ script = ExtResource( 3 )
 targets = [ NodePath("../Companion"), NodePath("../Player") ]
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 4 )]
+enemies_to_spawn = 25
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1030, 48 )
 enemy_scene = ExtResource( 13 )
+enemies_to_spawn = 30
 zone_to_open = 2
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
@@ -839,7 +841,7 @@ __meta__ = {
 }
 
 [node name="Mist" type="Area2D" parent="."]
-position = Vector2( -333, -2 )
+position = Vector2( -583, 5 )
 collision_layer = 0
 collision_mask = 6
 script = ExtResource( 15 )

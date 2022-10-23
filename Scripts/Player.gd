@@ -34,6 +34,12 @@ func get_input():
 		velocity.y += 1
 	animated_sprite.flip_h = direction == "left"
 	velocity = velocity.normalized() * speed
+	
+func is_attack_pressed():
+	if Input.is_action_just_pressed("attack_light"):
+		reset_modulate_sprite()
+		_state = States.ATTACK
+		animation_player.play("attack1")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -44,9 +50,7 @@ func _process(_delta):
 			animation_player.play("idle")
 			if Input.is_action_just_pressed("roll"):
 				_state = States.ROLL
-			if Input.is_action_just_pressed("attack_light"):
-				_state = States.ATTACK
-				animation_player.play("attack1")
+			is_attack_pressed()
 			# if any of the input movement buttons is pressed
 			if velocity.x != 0 or velocity.y != 0:
 				_state = States.RUN
@@ -58,9 +62,7 @@ func _process(_delta):
 		States.RUN:
 			if Input.is_action_just_pressed("roll"):
 				_state = States.ROLL
-			if Input.is_action_just_pressed("attack_light"):
-				_state = States.ATTACK
-				animation_player.play("attack1")
+			is_attack_pressed()
 			if velocity.x == 0 && velocity.y == 0:
 				_state = States.IDLE
 			# if i want to keep moving when attacking just put this line outside of the match block
@@ -69,12 +71,13 @@ func _process(_delta):
 			if animation_player.current_animation != "die":
 				animation_player.play("die")
 		States.ROLL:
-			if Input.is_action_just_pressed("attack_light"):
-				_state = States.ATTACK
-				animation_player.play("attack1")
+			is_attack_pressed()
 			if animation_player.current_animation != "roll":
 				animation_player.play("roll")
 			velocity = move_and_slide(velocity)
+
+func reset_modulate_sprite():
+	animated_sprite.modulate = Color(1, 1, 1, 1)
 
 func get_velocity():
 	return velocity
@@ -97,6 +100,7 @@ func _on_AttackRange_body_entered(body):
 
 func take_damage(dmg: int):
 	if _state != States.ROLL:
+		animation_player.play("take_damage")
 		current_hp -= dmg
 	if current_hp <= 0 and _state != States.DIE:
 		_state = States.DIE

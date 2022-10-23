@@ -31,23 +31,25 @@ func spawn_random_reward():
 func _on_Timer_timeout():
 	# if we reached the limit of enemies to spawn 
 	if enemies_spawned >= enemies_to_spawn:
-		
 		timer.stop()
 		spawn_random_reward()
 		emit_signal("enemy_spawn_timer_stopped", zone_to_open)
-#		print("emitting signal stopped with zone to open: %s" % zone_to_open)
 		return
-	# Instance the bat enemy
-	var enemy = enemy_scene.instance()
-	var rand_target = player if (randi() % 100 > 50) else companion
-	enemy.set_current_target(rand_target)
+	var number_of_enemies = randi() % 5
 	
-	enemy_spawn_location.offset = randi()
+	for i in range(number_of_enemies):
+		# Instance the bat enemy
+		var enemy = enemy_scene.instance()
+		# Choose a random target for the enemy
+		var rand_target = player if (randi() % 100 > 50) else companion
+		enemy.set_current_target(rand_target)
+		
+		enemy_spawn_location.offset = randi()
 
-	enemy.position = enemy_spawn_location.position
-	
-	add_child(enemy)
-	enemies_spawned += 1
+		enemy.position = enemy_spawn_location.position
+		
+		add_child(enemy)
+		enemies_spawned += 1
 	
 func _on_AttackPlayersArea_body_entered(_body):
 	if !has_spawn_been_triggered:

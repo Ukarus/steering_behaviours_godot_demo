@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Assets/Graphics/FreeKnight_v1/Colour2/NoOutline/120x80_PNGSheets/_Run.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=2]
@@ -51,6 +51,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimatedSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=49]
@@ -261,6 +273,23 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=93]
+resource_name = "take_damage"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.913725, 0.215686, 0.215686, 1 ), Color( 0.913725, 1, 1, 1 ), Color( 0.913725, 0.215686, 0.215686, 1 ), Color( 0.913725, 1, 1, 1 ) ]
 }
 
 [sub_resource type="AtlasTexture" id=63]
@@ -565,6 +594,7 @@ anims/die = SubResource( 79 )
 anims/idle = SubResource( 51 )
 anims/roll = SubResource( 80 )
 anims/run = SubResource( 50 )
+anims/take_damage = SubResource( 93 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 3.98708, -2 )
